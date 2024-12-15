@@ -8,13 +8,14 @@
 import UIKit
 
 class AuthViewController: UIViewController {
+    
     let viewService = ViewService.shared
     
     let indent = Config.Indent.self
     
     lazy var anyListLabel = AppLabel(style: .anyList)
     
-    lazy var titleLabel = AppLabel(style: .pagetitle)
+    lazy var errorLabel = AppLabel(style: .error)
     
     lazy var icon = {
         let icon = UIImageView()
@@ -24,8 +25,8 @@ class AuthViewController: UIViewController {
         icon.layer.shadowColor = UIColor.black.cgColor
         icon.layer.shadowOffset = .init(width: 8, height: 8)
         icon.layer.shadowOpacity = 0.3
-        icon.heightAnchor.constraint(equalToConstant: 180).isActive = true
-        icon.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: Config.listIconSize).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: Config.listIconSize).isActive = true
         return icon
     }()
     
@@ -38,13 +39,12 @@ class AuthViewController: UIViewController {
     lazy var registerButton = AppButton(style: .register, action: registerAction)
     
     lazy var stack = viewService.verticalStack(subviews: [
-        anyListLabel, icon, emailField, passwordField, loginInButton, UIView() ,registerButton
+        anyListLabel, icon, errorLabel, emailField, passwordField, loginInButton, UIView() ,registerButton
     ])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = "Вход"
-        anyListLabel.text = "AnyList"
+        errorLabel.text = "что-то пошло не так"
         view.backgroundColor = .gray
         view.addSubview(anyListLabel)
         view.addSubview(stack)

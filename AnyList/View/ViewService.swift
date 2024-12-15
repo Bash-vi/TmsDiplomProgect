@@ -27,6 +27,29 @@ class ViewService {
         return stack
     }
     
+    func createUserStack(userInfoAction: UIAction, fullName: String) -> UIStackView {
+//        let icon = UIImageView()
+//        icon.image = UIImage(systemName: "person.crop.circle")
+//        icon.contentMode = .scaleAspectFit
+//        icon.tintColor = .white
+        
+        let icon = AppIcon(style: .user)
+      
+        let fullnameLabel = AppLabel(style: .value)
+        fullnameLabel.text = fullName
+        
+        let welcomeLabel = AppLabel(style: .subtitle)
+        welcomeLabel.text = "Добро пожаловать"
+        
+        let fullNamestack = verticalStack(subviews: [welcomeLabel, fullnameLabel])
+        
+        let userInfoButton = AppButton(style: .next, action: userInfoAction)
+        
+        let stack = horisontStack(subviews: [icon ,fullNamestack, userInfoButton])
+        stack.distribution = .fillProportionally
+        return stack
+    }
+    
     func createWrapper() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

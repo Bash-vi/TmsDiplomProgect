@@ -22,6 +22,9 @@
 		A8E474032D0CBB99005833B2 /* ViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474022D0CBB99005833B2 /* ViewService.swift */; };
 		A8E474052D0CCAA2005833B2 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474042D0CCAA2005833B2 /* AuthViewController.swift */; };
 		A8E474192D0CCCEE005833B2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474182D0CCCEE005833B2 /* RegisterViewController.swift */; };
+		A8E474252D0E22A2005833B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474242D0E22A2005833B2 /* User.swift */; };
+		A8E474272D0E3DBF005833B2 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474262D0E3DBF005833B2 /* List.swift */; };
+		A8E474292D0E4AEC005833B2 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474282D0E4AEC005833B2 /* AppIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		A8E474022D0CBB99005833B2 /* ViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewService.swift; sourceTree = "<group>"; };
 		A8E474042D0CCAA2005833B2 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		A8E474182D0CCCEE005833B2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A8E474242D0E22A2005833B2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A8E474262D0E3DBF005833B2 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		A8E474282D0E4AEC005833B2 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -78,6 +84,7 @@
 		A8E473BE2D0C8A40005833B2 = {
 			isa = PBXGroup;
 			children = (
+				A8E474232D0E2261005833B2 /* Models */,
 				A8E473F92D0CB307005833B2 /* Config */,
 				A8E473F82D0CB2A0005833B2 /* Network */,
 				A8E473E72D0C8AEA005833B2 /* App */,
@@ -136,6 +143,7 @@
 			children = (
 				A8E474022D0CBB99005833B2 /* ViewService.swift */,
 				A8E473FC2D0CB3F7005833B2 /* AppButton.swift */,
+				A8E474282D0E4AEC005833B2 /* AppIcon.swift */,
 				A8E473FE2D0CB61C005833B2 /* AppLabel.swift */,
 				A8E474002D0CB8B3005833B2 /* AppTextField.swift */,
 			);
@@ -155,6 +163,15 @@
 				A8E473FA2D0CB31F005833B2 /* Config.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		A8E474232D0E2261005833B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8E474242D0E22A2005833B2 /* User.swift */,
+				A8E474262D0E3DBF005833B2 /* List.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,11 +261,14 @@
 				A8E473CB2D0C8A40005833B2 /* AppDelegate.swift in Sources */,
 				A8E473FB2D0CB31F005833B2 /* Config.swift in Sources */,
 				A8E473E52D0C8AAB005833B2 /* AnyListViewController.swift in Sources */,
+				A8E474292D0E4AEC005833B2 /* AppIcon.swift in Sources */,
+				A8E474272D0E3DBF005833B2 /* List.swift in Sources */,
 				A8E473CD2D0C8A40005833B2 /* SceneDelegate.swift in Sources */,
 				A8E474012D0CB8B3005833B2 /* AppTextField.swift in Sources */,
 				A8E473FF2D0CB61C005833B2 /* AppLabel.swift in Sources */,
 				A8E474052D0CCAA2005833B2 /* AuthViewController.swift in Sources */,
 				A8E473FD2D0CB3F7005833B2 /* AppButton.swift in Sources */,
+				A8E474252D0E22A2005833B2 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

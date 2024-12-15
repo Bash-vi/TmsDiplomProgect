@@ -14,6 +14,7 @@ class AppLabel: UILabel {
         case pagetitle
         case subtitle
         case value
+        case error
     }
     
     enum LabelFont {
@@ -21,6 +22,7 @@ class AppLabel: UILabel {
         static let subtitle = UIFont.systemFont(ofSize: 16, weight: .light)
         static let value = UIFont.systemFont(ofSize: 18, weight: .regular)
         static let anyList = UIFont.systemFont(ofSize: 34, weight: .thin)
+        static let error = UIFont.systemFont(ofSize: 16, weight: .light)
     }
     
     init(
@@ -29,6 +31,7 @@ class AppLabel: UILabel {
         super.init(frame: .zero)
         switch style {
         case .anyList:
+            self.text = "AnyList"
             self.font = LabelFont.anyList
             self.textAlignment = .center
             self.layer.shadowColor = UIColor.black.cgColor
@@ -41,11 +44,14 @@ class AppLabel: UILabel {
         case .subtitle:
             self.font = LabelFont.subtitle
             self.textColor = .systemGray3
-            self.widthAnchor.constraint(equalToConstant: Config.titleLabelWidth).isActive = true
-        case .value :
+//            self.widthAnchor.constraint(equalToConstant: Config.titleLabelWidth).isActive = true
+        case .value:
             self.textAlignment = .left
             self.font = LabelFont.value
             self.numberOfLines = 0
+        case .error:
+            self.font = LabelFont.error
+            self.textAlignment = .center
         }
         self.translatesAutoresizingMaskIntoConstraints = false
         self.textColor = .white

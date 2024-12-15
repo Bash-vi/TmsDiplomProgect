@@ -10,19 +10,20 @@ import UIKit
 
 class AppButton: UIButton {
     enum Style {
-        case edit
+        case next
         case delete
         case add
         case close
         case register
         case loginIn
+        case save
     }
     
     enum Icon {
-        static let edit = UIImage(systemName: "pencil.circle.fill")
+        static let next = UIImage(systemName: "chevron.right.circle.fill")
         static let delete = UIImage(systemName: "trash.circle.fill")
         static let add = UIImage(systemName: "plus.circle.fill")
-        static let close = UIImage(systemName: "x.circle.fill")
+        static let close = UIImage(systemName: "xmark.circle.fill")
     }
     
     init(
@@ -31,8 +32,8 @@ class AppButton: UIButton {
     ){
         super.init(frame: .zero)
         switch style {
-        case .edit:
-            self.setImage(Icon.edit, for: .normal)
+        case .next:
+            self.setImage(Icon.next, for: .normal)
             self.contentVerticalAlignment = .fill
             self.contentHorizontalAlignment = .fill
             self.layer.cornerRadius = Config.buttonSize / 2
@@ -43,12 +44,22 @@ class AppButton: UIButton {
         case .add:
             self.setImage(Icon.add, for: .normal)
         case .close:
+            tintColor = .green
             self.setImage(Icon.close, for: .normal)
+            self.contentVerticalAlignment = .fill
+            self.contentHorizontalAlignment = .fill
+            self.layer.cornerRadius = Config.buttonSize / 2
+            self.widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
+            self.heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
             self.backgroundColor = .red
+            
         case .register:
             self.setTitle("Регистрация", for: .normal)
         case .loginIn:
             self.setTitle("Войти", for: .normal)
+            self.backgroundColor = .systemGreen.withAlphaComponent(0.5)
+        case .save:
+            self.setTitle("Сохранить", for: .normal)
             self.backgroundColor = .systemGreen.withAlphaComponent(0.5)
         }
         self.translatesAutoresizingMaskIntoConstraints = false
