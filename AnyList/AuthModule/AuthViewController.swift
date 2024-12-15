@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol AuthViewProtocol: AnyObject {
+    func present(errorText: String)
+}
+
 class AuthViewController: UIViewController {
     
     let viewService = ViewService.shared
@@ -17,18 +21,7 @@ class AuthViewController: UIViewController {
     
     lazy var errorLabel = AppLabel(style: .error)
     
-    lazy var icon = {
-        let icon = UIImageView()
-        icon.image = UIImage(systemName: "list.bullet.rectangle")
-        icon.contentMode = .scaleAspectFit
-        icon.tintColor = .white
-        icon.layer.shadowColor = UIColor.black.cgColor
-        icon.layer.shadowOffset = .init(width: 8, height: 8)
-        icon.layer.shadowOpacity = 0.3
-        icon.heightAnchor.constraint(equalToConstant: Config.listIconSize).isActive = true
-        icon.widthAnchor.constraint(equalToConstant: Config.listIconSize).isActive = true
-        return icon
-    }()
+    lazy var icon = AppIcon(style: .list)
     
     lazy var emailField = AppTextField(placeholderText: "Введите вашу почту")
     

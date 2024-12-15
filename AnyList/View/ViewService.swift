@@ -28,11 +28,6 @@ class ViewService {
     }
     
     func createUserStack(userInfoAction: UIAction, fullName: String) -> UIStackView {
-//        let icon = UIImageView()
-//        icon.image = UIImage(systemName: "person.crop.circle")
-//        icon.contentMode = .scaleAspectFit
-//        icon.tintColor = .white
-        
         let icon = AppIcon(style: .user)
       
         let fullnameLabel = AppLabel(style: .value)

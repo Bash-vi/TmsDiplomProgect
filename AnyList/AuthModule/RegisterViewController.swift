@@ -7,7 +7,16 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
+
+
+class RegisterViewController: UIViewController, AuthViewProtocol {
+    func present(errorText: String) {
+        Task {
+            errorLabel.text = errorText
+        }
+    }
+    
+    var presenter: AuthPresenterActionHandler?
     
     let viewService = ViewService.shared
     
@@ -16,19 +25,6 @@ class RegisterViewController: UIViewController {
     lazy var errorLabel = AppLabel(style: .error)
     
     lazy var titleLabel = AppLabel(style: .pagetitle)
-    
-    lazy var icon = {
-        let icon = UIImageView()
-        icon.image = UIImage(systemName: "list.bullet.rectangle")
-        icon.contentMode = .scaleAspectFit
-        icon.tintColor = .white
-        icon.layer.shadowColor = UIColor.black.cgColor
-        icon.layer.shadowOffset = .init(width: 8, height: 8)
-        icon.layer.shadowOpacity = 0.3
-        icon.heightAnchor.constraint(equalToConstant: 180).isActive = true
-        icon.widthAnchor.constraint(equalToConstant: 180).isActive = true
-        return icon
-    }()
     
     lazy var emailField = AppTextField(placeholderText: "Введите вашу почту")
     
@@ -71,6 +67,12 @@ class RegisterViewController: UIViewController {
     })
     
     lazy var save: UIAction = .init(handler: { [weak self] _ in
-        
+        guard let self else { return }
+        let email = emailField.text
+        let password = passwordField.text
+        let name = nameField.text
+        let surename = surenameField.text
+        let user: User = .init(email: email, password: password, name: name, surename: surename )
+        Task { await self.presenter?.register(user: user) }
     })
 }

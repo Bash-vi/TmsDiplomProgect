@@ -9,11 +9,11 @@ import Foundation
 
 struct User: Identifiable, Codable {
     var id: String = UUID().uuidString
-    let email: String
-    let password: String
-    var name: String
+    let email: String?
+    let password: String?
+    var name: String?
     var surename: String? = nil
-    var fullName: String {
-        "\(name) \(surename ?? "")"
-    }
+//    var fullName: String {
+//        "\(name ?? "") \(surename ?? "")"
+//    }
 }

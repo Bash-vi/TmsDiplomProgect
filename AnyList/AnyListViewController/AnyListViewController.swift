@@ -24,8 +24,9 @@ class AnyListViewController: UIViewController {
     let indent = Config.Indent.self
     
     var fullName: String {
-        guard let user else { return "Пожалуйста, зарегистрируйтесь"}
-        return user.fullName
+        guard user != nil else { return "Пожалуйста, зарегистрируйтесь"}
+//        return user.fullName
+        return " "
     }
     
     lazy var anyListLabel = AppLabel(style: .anyList)

@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBT79_t0LVK3l6w2nb-U60M0PI2OL8JRKM</string>
+	<string>AIzaSyAjxeeJ7PcILvXKSuVaP3WVroeunN3KTMc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>585718673689</string>
+	<string>1003793377843</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>Bashvicorp.AnyList</string>
 	<key>PROJECT_ID</key>
-	<string>fir-app-a37b6</string>
+	<string>anylist-8d32b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fir-app-a37b6.firebasestorage.app</string>
+	<string>anylist-8d32b.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:585718673689:ios:d00ed93dde3adcbc985588</string>
+	<string>1:1003793377843:ios:0e3ebd222723e29eeed146</string>
 </dict>
 </plist>
