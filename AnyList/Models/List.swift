@@ -12,3 +12,8 @@ struct Element: Identifiable, Codable {
     let price: String
     var name: String
 }
+
+struct List: Identifiable, Codable {
+    var id: String = UUID().uuidString
+    var name: String
+}

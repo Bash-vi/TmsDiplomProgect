@@ -20,6 +20,9 @@ class AuthInteractor: AuthInteractorProtocol {
     func register(user: User) async {
         do {
             try await netWork?.createUser(user: user)
+            
+            await netWork?.add(user: user)
+            
         } catch {
             let authError = error as? AuthError
             guard let authError else { return }

@@ -28,8 +28,6 @@ class ViewService {
     }
     
     func createUserStack(userInfoAction: UIAction, fullName: String) -> UIStackView {
-        let icon = AppIcon(style: .user)
-      
         let fullnameLabel = AppLabel(style: .value)
         fullnameLabel.text = fullName
         
@@ -40,8 +38,34 @@ class ViewService {
         
         let userInfoButton = AppButton(style: .next, action: userInfoAction)
         
-        let stack = horisontStack(subviews: [icon ,fullNamestack, userInfoButton])
+        let stack = horisontStack(subviews: [fullNamestack, userInfoButton])
         stack.distribution = .fillProportionally
+        return stack
+    }
+    
+    func createListStack(textField: UITextField, titleText: String ,close: UIAction, save: UIAction) -> UIStackView {
+        let nameField = textField
+        
+        let subtiteLabel = AppLabel(style: .subtitle)
+        subtiteLabel.text = titleText
+        
+        let closeButton = AppButton(style: .close, action: close)
+        
+        let saveButton = AppButton(style: .checkmark, action: save)
+        
+        let titleStack = UIStackView(arrangedSubviews: [closeButton, subtiteLabel, saveButton])
+        
+        let stack = verticalStack(subviews: [titleStack, nameField])
+        stack.backgroundColor = .gray
+        return stack
+    }
+    
+    func createAddStack(add: UIAction) -> UIStackView {
+        let titleLabel = AppLabel(style: .pagetitle)
+        titleLabel.text = "Мои Списки"
+        
+        let addButton = AppButton(style: .add, action: add)
+        let stack = horisontStack(subviews: [titleLabel, addButton])
         return stack
     }
     

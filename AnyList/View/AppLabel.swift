@@ -19,8 +19,8 @@ class AppLabel: UILabel {
     
     enum LabelFont {
         static let pagetitle = UIFont.systemFont(ofSize: 26, weight: .bold)
-        static let subtitle = UIFont.systemFont(ofSize: 16, weight: .light)
-        static let value = UIFont.systemFont(ofSize: 18, weight: .regular)
+        static let subtitle = UIFont.systemFont(ofSize: 24, weight: .regular)
+        static let value = UIFont.systemFont(ofSize: 16, weight: .regular)
         static let anyList = UIFont.systemFont(ofSize: 34, weight: .thin)
         static let error = UIFont.systemFont(ofSize: 16, weight: .light)
     }
@@ -44,9 +44,7 @@ class AppLabel: UILabel {
         case .subtitle:
             self.font = LabelFont.subtitle
             self.textColor = .systemGray3
-//            self.widthAnchor.constraint(equalToConstant: Config.titleLabelWidth).isActive = true
         case .value:
-            self.textAlignment = .left
             self.font = LabelFont.value
             self.numberOfLines = 0
         case .error:

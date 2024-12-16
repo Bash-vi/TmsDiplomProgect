@@ -12,11 +12,21 @@ protocol AuthViewRouter {
     func buildRegisterView() -> RegisterViewController
     func openRegisterView()
     func closeRegisterView()
+    func registerViewOpenApp()
+    func authViewOpenApp()
 }
 
 class AuthDefaultRouter: AuthViewRouter {
     
     let netWork = NetWork()
+    
+    let anyListViewRouter: AnyListViewRouter
+    
+    let anyListRouter = AnyListViewDefaultRouter()
+    
+    init() {
+        self.anyListViewRouter = anyListRouter
+    }
     
     weak var authView: AuthViewController?
     
@@ -48,7 +58,20 @@ class AuthDefaultRouter: AuthViewRouter {
     
     func openRegisterView() {
         let registerView = buildRegisterView()
+        registerView.modalPresentationStyle = .overFullScreen
         authView?.present(registerView, animated: true)
+    }
+    
+    func authViewOpenApp() {
+        let anyListView = anyListViewRouter.build()
+        anyListView.modalPresentationStyle = .overFullScreen
+        authView?.present(anyListView, animated: true)
+    }
+    
+    func registerViewOpenApp() {
+        let anyListView = anyListViewRouter.build()
+        anyListView.modalPresentationStyle = .overFullScreen
+        registerView?.present(anyListView, animated: true)
     }
     
     func closeRegisterView() {
@@ -56,17 +79,3 @@ class AuthDefaultRouter: AuthViewRouter {
     }
 }
 
-//protocol RegisterViewRouter {
-//    func build() -> RegisterViewController
-//}
-//
-//class RegisterDefaultRoter: RegisterViewRouter {
-//    func build() -> RegisterViewController {
-//        let interactor = AuthInteractor()
-//        let presenter = AuthPresenter(interactor: interactor, router: self)
-//        let view = RegisterViewController()
-//        view.presenter = presenter
-//        interactor.presenter = presenter
-//        presenter.view = view
-//    }
-//}

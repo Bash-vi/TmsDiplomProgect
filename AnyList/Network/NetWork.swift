@@ -9,10 +9,23 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+protocol NetWorkAnyListProtocol: AnyObject {
+    func signOut()
+    func create(list: List) async
+    func create(element: Element) async
+    func readLists() async -> [List]
+    func readElements() async -> [Element]
+    func update(listId: String, list: List) async
+    func update(elementId: String, element: Element) async
+    func delete(listId: String) async
+    func delete(elementId: String) async
+    func getUserData() async throws -> User
+}
+
 protocol NetWorkAuthProtocol: AnyObject {
     func createUser(user: User) async throws
     func sighIn(email: String?, password: String?) async throws
-    func getUserData() async throws -> User
+    func add(user: User) async
 }
 
 enum AuthError: Error {
@@ -29,13 +42,23 @@ enum AuthError: Error {
     }
 }
 
-class NetWork: NetWorkAuthProtocol {
+enum CollectionName {
+    static let users = "Users"
+    static let lists = "Lists"
+    static let elemets = "Elements"
+}
+
+class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     
     let minimumPasswordLength = 8
     
     let db: Firestore = Firestore.firestore()
     
     let defaultUser: User = .init(email: nil, password: nil)
+    
+    let uid = Auth.auth().currentUser?.uid
+    
+    let collection = CollectionName.self
     
     func createUser(user: User) async throws {
         guard let email = user.email, !email.isEmpty else { throw AuthError.emailIsEmpty }
@@ -45,21 +68,30 @@ class NetWork: NetWorkAuthProtocol {
         guard password.count >= minimumPasswordLength else { throw AuthError.toShortPassword }
         
         _ = try await Auth.auth().createUser(withEmail: email, password: password)
-//            try await result.user.sendEmailVerification()
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userUidData: User = .init(id: uid, email: user.email, password: nil, name: user.name, surename: user.surename)
-         add(userUidData: userUidData)
+       
     }
     
-    private func add(userUidData: User)  {
+    func add(user: User) async  {
+        guard let uid else { return }
+        let userUidData: User = .init(
+            id: uid, email: user.email, password: nil,
+            name: user.name, surename: user.surename
+        )
         do {
-        try db
-            .collection("users")
-            .document(userUidData.id)
-            .setData(from: userUidData)
-            print(userUidData)
+          try await db.collection("userstest").document(userUidData.id).setData([
+            "name": userUidData.name ?? "",
+            "surename": userUidData.surename ?? "",
+            "country": "USA"
+          ])
+          print("Document successfully written!")
         } catch {
-          print("Error adding document: \(error)")
+          print("Error writing document: \(error)")
+        }
+        
+        do {
+            try db.collection(collection.users).document(userUidData.id).setData(from: userUidData)
+        } catch {
+            print("Error adding document: \(error)")
         }
     }
     
@@ -71,14 +103,14 @@ class NetWork: NetWorkAuthProtocol {
         
         guard password.count >= minimumPasswordLength else { throw AuthError.toShortPassword }
         
-            _ = try await Auth.auth().signIn(withEmail: email, password: password)
+        _ = try await Auth.auth().signIn(withEmail: email, password: password)
     }
     
     func getUserData() async throws -> User {
         guard let uid = Auth.auth().currentUser?.uid else { return defaultUser }
-            let snapShot = try await db.collection("users").document(uid).getDocument()
-            let userData = try snapShot.data(as: User.self)
-            return userData
+        let snapShot = try await db.collection(collection.users).document(uid).getDocument()
+        let userData = try snapShot.data(as: User.self)
+        return userData
     }
     
     func signOut() {
@@ -94,6 +126,127 @@ class NetWork: NetWorkAuthProtocol {
             return true
         } else {
             return false
+        }
+    }
+    
+    func create(list: List) async {
+        guard let uid else { return }
+        do {
+            try db.collection(collection.users)
+                .document(uid)
+                .collection(collection.lists)
+                .document()
+                .setData(from: list)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func create(element: Element) async {
+        guard let uid else { return }
+        do {
+            try db.collection(collection.users)
+                .document(uid)
+                .collection("elements")
+                .document()
+                .setData(from: element)
+        } catch {
+            print(error)
+        }
+    }
+   
+    func readLists() async -> [List] {
+        do {
+            guard let uid else { return [] }
+            let snapshot = try await db.collection(collection.users)
+                .document(uid)
+                .collection(collection.lists)
+                .getDocuments()
+            let lists: [List] = snapshot.documents.compactMap {
+                var list = try! $0.data(as: List.self)
+                list.id = $0.documentID
+                return list
+            }
+            return lists
+        } catch {
+            print(error)
+            return []
+        }
+    }
+   
+    func readElements() async -> [Element] {
+        do {
+            guard let uid else { return [] }
+            let snapshot = try await db.collection(collection.users)
+                .document(uid)
+                .collection("elements")
+                .getDocuments()
+            let elements: [Element] = snapshot.documents.compactMap {
+                var element = try! $0.data(as: Element.self)
+                element.id = $0.documentID
+                return element
+            }
+            return elements
+        } catch {
+            print(error)
+            return []
+        }
+    }
+    
+    func update(listId: String, list: List) async {
+        do {
+            guard let uid else { return }
+            try await db.collection(collection.users)
+                .document(uid)
+                .collection(collection.lists)
+                .document(listId)
+                .updateData([
+                    "name": list.name,
+                ])
+        } catch {
+            print(error)
+        }
+    }
+    
+    func update(elementId: String, element: Element) async {
+        do {
+            guard let uid else { return }
+            try await db.collection("users")
+                .document(uid)
+                .collection("elements")
+                .document(elementId)
+                .updateData([
+                    "name": element.name,
+                    "price" : element.price
+                ])
+        } catch {
+            print(error)
+        }
+    }
+   
+    func delete(listId: String) async {
+        do {
+            guard let uid else { return }
+            try await db.collection(collection.users)
+                .document(uid)
+                .collection(collection.lists)
+                .document(listId)
+                .delete()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func delete(elementId: String) async {
+        do {
+            guard let uid else { return }
+            try await db.collection("users")
+                .document(uid)
+                .collection("elements")
+                .document(elementId)
+                .delete()
+        } catch {
+            print(error)
         }
     }
 }

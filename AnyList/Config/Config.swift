@@ -8,9 +8,11 @@
 import Foundation
 
 enum Config {
-    static let spacing: CGFloat = 10
+    static let spacing: CGFloat = 5
+    static let betweenView: CGFloat = 25
     static let titleLabelWidth: CGFloat = 150
-    static let buttonSize: CGFloat = 40
+    static let buttonSize: CGFloat = 35
+    static let nextButtonSize: CGFloat = 60
     static let userIconSize: CGFloat = 60
     static let listIconSize: CGFloat = 180
     
