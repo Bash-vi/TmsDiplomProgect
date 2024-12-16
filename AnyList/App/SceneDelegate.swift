@@ -16,8 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
-        let regvc = router.build()
-        self.window?.rootViewController = regvc
+        
+        if router.netWork.isLogin() {
+            self.window?.rootViewController = AnyListViewController()
+        } else {
+            let AuthView = router.buildAuthView()
+            self.window?.rootViewController = AuthView
+        }
+        
         self.window?.makeKeyAndVisible()
     }
 

@@ -10,12 +10,7 @@ import UIKit
 
 
 class RegisterViewController: UIViewController, AuthViewProtocol {
-    func present(errorText: String) {
-        Task {
-            errorLabel.text = errorText
-        }
-    }
-    
+
     var presenter: AuthPresenterActionHandler?
     
     let viewService = ViewService.shared
@@ -61,9 +56,16 @@ class RegisterViewController: UIViewController, AuthViewProtocol {
         ])
     }
     
+    func present(errorText: String) {
+        Task {
+            errorLabel.text = errorText
+        }
+    }
+    
     //MARK: Button action
     lazy var close: UIAction = .init(handler: { [weak self] _ in
-        
+        guard let self else { return }
+        self.presenter?.closeRegisterView()
     })
     
     lazy var save: UIAction = .init(handler: { [weak self] _ in

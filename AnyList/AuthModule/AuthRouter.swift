@@ -8,44 +8,65 @@
 import UIKit
 
 protocol AuthViewRouter {
-    func build() -> RegisterViewController
+    func buildAuthView() -> AuthViewController
+    func buildRegisterView() -> RegisterViewController
     func openRegisterView()
+    func closeRegisterView()
 }
 
 class AuthDefaultRouter: AuthViewRouter {
-    weak var view: AuthViewController?
     
-    var detailViewRouter: DetailViewRouter?
+    let netWork = NetWork()
     
-    func build() -> RegisterViewController {
+    weak var authView: AuthViewController?
+    
+    weak var registerView: RegisterViewController?
+    
+    func buildAuthView() -> AuthViewController {
+        let interactor = AuthInteractor()
+        let presenter = AuthPresenter(interactor: interactor, router: self)
+        let view = AuthViewController()
+        view.presenter = presenter
+        interactor.presenter = presenter
+        interactor.netWork = netWork
+        presenter.view = view
+        self.authView = view
+        return view
+    }
+    
+    func buildRegisterView() -> RegisterViewController {
         let interactor = AuthInteractor()
         let presenter = AuthPresenter(interactor: interactor, router: self)
         let view = RegisterViewController()
         view.presenter = presenter
         interactor.presenter = presenter
+        interactor.netWork = netWork
         presenter.view = view
-//        self.view = view
+        self.registerView = view
         return view
     }
     
     func openRegisterView() {
-        
+        let registerView = buildRegisterView()
+        authView?.present(registerView, animated: true)
     }
     
-    func openDetailView(string: String) {
-//        let detailView = detailViewRouter?.build(name: string)
-//        view?.present(detailView, animated: true)
+    func closeRegisterView() {
+        registerView?.dismiss(animated: true)
     }
 }
 
-protocol DetailViewRouter {
-    func build(name: String) -> UIViewController
-}
-
-class registerroter: DetailViewRouter {
-    func build(name: String) -> UIViewController {
-        return UIViewController()
-    }
-    
-    
-}
+//protocol RegisterViewRouter {
+//    func build() -> RegisterViewController
+//}
+//
+//class RegisterDefaultRoter: RegisterViewRouter {
+//    func build() -> RegisterViewController {
+//        let interactor = AuthInteractor()
+//        let presenter = AuthPresenter(interactor: interactor, router: self)
+//        let view = RegisterViewController()
+//        view.presenter = presenter
+//        interactor.presenter = presenter
+//        presenter.view = view
+//    }
+//}

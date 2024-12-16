@@ -13,7 +13,7 @@ struct User: Identifiable, Codable {
     let password: String?
     var name: String?
     var surename: String? = nil
-//    var fullName: String {
-//        "\(name ?? "") \(surename ?? "")"
-//    }
+    var fullName: String {
+        "\(name ?? "") \(surename ?? "")"
+    }
 }

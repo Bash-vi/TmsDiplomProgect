@@ -11,7 +11,9 @@ protocol AuthViewProtocol: AnyObject {
     func present(errorText: String)
 }
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController, AuthViewProtocol {
+    
+    var presenter: AuthPresenterActionHandler?
     
     let viewService = ViewService.shared
     
@@ -27,12 +29,15 @@ class AuthViewController: UIViewController {
     
     lazy var passwordField = AppTextField(placeholderText: "Введите пароль")
     
-    lazy var loginInButton = AppButton(style: .loginIn, action: loginInAction)
+    lazy var loginInButton = AppButton(style: .loginIn, action: loginInButtonAction)
 
-    lazy var registerButton = AppButton(style: .register, action: registerAction)
+    lazy var registerButton = AppButton(style: .register, action: registerButtonAction)
     
     lazy var stack = viewService.verticalStack(subviews: [
-        anyListLabel, icon, errorLabel, emailField, passwordField, loginInButton, UIView() ,registerButton
+        anyListLabel, icon,
+        errorLabel, emailField,
+        passwordField, loginInButton,
+        registerButton
     ])
     
     override func viewDidLoad() {
@@ -52,12 +57,22 @@ class AuthViewController: UIViewController {
         ])
     }
     
+    func present(errorText: String) {
+        Task {
+            errorLabel.text = errorText
+        }
+    }
+    
     //MARK: Button action
-    lazy var loginInAction: UIAction = .init(handler: { [weak self] _ in
-        
+    lazy var loginInButtonAction: UIAction = .init(handler: { [weak self] _ in
+        guard let self else { return }
+        let email = emailField.text
+        let password = passwordField.text
+        Task { await self.presenter?.sighIn(email: email, password: password) }
     })
     
-    lazy var registerAction: UIAction = .init(handler: { [weak self] _ in
-        
+    lazy var registerButtonAction: UIAction = .init(handler: { [weak self] _ in
+        guard let self else { return }
+        self.presenter?.openRegisterView()
     })
 }

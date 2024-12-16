@@ -9,21 +9,31 @@ import Foundation
 
 protocol AuthInteractorProtocol {
     func register(user: User) async
+    func sighIn(email: String?, password: String?) async
 }
 
 class AuthInteractor: AuthInteractorProtocol {
     weak var presenter: AuthPresenterResultHandler?
     
-    let network: NetWork = .init()
+    var netWork: NetWorkAuthProtocol?
     
     func register(user: User) async {
         do {
-            try await network.createUser(user: user)
+            try await netWork?.createUser(user: user)
         } catch {
-            let err = error as! AuthError
-            print(err)
-            presenter?.present(errorText: err.errorMessege)
-            
+            let authError = error as? AuthError
+            guard let authError else { return }
+            presenter?.present(errorText: authError.errorMessege)
+        }
+    }
+    
+    func sighIn(email: String?, password: String?) async {
+        do {
+            try await netWork?.sighIn(email: email, password: password)
+        } catch {
+            let authError = error as? AuthError
+            guard let authError else { return }
+            presenter?.present(errorText: authError.errorMessege)
         }
     }
 }
