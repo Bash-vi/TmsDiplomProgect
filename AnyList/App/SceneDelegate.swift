@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: scene)
         
         if router.netWork.isLogin() {
-            self.window?.rootViewController = AnyListViewController()
+            let anyListView = router.anyListViewRouter.build()
+            self.window?.rootViewController = anyListView
         } else {
             let AuthView = router.buildAuthView()
             self.window?.rootViewController = AuthView

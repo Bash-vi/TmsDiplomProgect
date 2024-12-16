@@ -12,6 +12,8 @@ protocol AuthPresenterActionHandler: AnyObject {
     func sighIn(email: String?, password: String?) async
     func openRegisterView()
     func closeRegisterView()
+    func registerViewOpenApp()
+    func authViewOpenApp()
 }
 
 protocol AuthPresenterResultHandler: AnyObject {
@@ -52,5 +54,13 @@ class AuthPresenter: AuthPresenterActionHandler, AuthPresenterResultHandler {
     
     func closeRegisterView() {
         router.closeRegisterView()
+    }
+    
+    func registerViewOpenApp() {
+        router.registerViewOpenApp()
+    }
+    
+    func authViewOpenApp() {
+        router.authViewOpenApp()
     }
 }
