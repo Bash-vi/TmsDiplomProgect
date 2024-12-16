@@ -11,7 +11,8 @@ enum Config {
     static let spacing: CGFloat = 10
     static let titleLabelWidth: CGFloat = 150
     static let buttonSize: CGFloat = 40
-    static let iconSize: CGFloat = 60
+    static let userIconSize: CGFloat = 60
+    static let listIconSize: CGFloat = 180
     
     enum Cell {
         static let indent: CGFloat = 15
@@ -19,8 +20,8 @@ enum Config {
     
     enum Indent {
         static let bot: CGFloat = -20
-        static let right: CGFloat = -25
+        static let right: CGFloat = -30
         static let top: CGFloat = 20
-        static let left: CGFloat = 25
+        static let left: CGFloat = 30
     }
 }
