@@ -18,9 +18,9 @@ class AppLabel: UILabel {
     }
     
     enum LabelFont {
-        static let pagetitle = UIFont.systemFont(ofSize: 26, weight: .bold)
-        static let subtitle = UIFont.systemFont(ofSize: 24, weight: .regular)
-        static let value = UIFont.systemFont(ofSize: 16, weight: .regular)
+        static let pagetitle = UIFont.systemFont(ofSize: 32, weight: .semibold)
+        static let subtitle = UIFont.systemFont(ofSize: 18, weight: .regular)
+        static let value = UIFont.systemFont(ofSize: 24, weight: .regular)
         static let anyList = UIFont.systemFont(ofSize: 34, weight: .thin)
         static let error = UIFont.systemFont(ofSize: 16, weight: .light)
     }

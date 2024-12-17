@@ -9,7 +9,7 @@ import UIKit
 
 protocol AnyListViewRouter {
     func build() -> AnyListViewController
-    func openCreateListView(list: List?)
+    func openCreateListView(list: List?, anyListView: AnyListViewController)
 }
 
 class AnyListViewDefaultRouter: AnyListViewRouter {
@@ -37,8 +37,8 @@ class AnyListViewDefaultRouter: AnyListViewRouter {
         return view
     }
     
-    func openCreateListView(list: List?) {
-        let createListView = CreateListViewRouter.build(list: list)
+    func openCreateListView(list: List?, anyListView: AnyListViewController) {
+        let createListView = CreateListViewRouter.build(list: list, anyListView: anyListView)
         createListView.modalPresentationStyle = .overFullScreen
         view?.present(createListView, animated: true)
     }

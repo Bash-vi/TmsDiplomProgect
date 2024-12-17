@@ -40,7 +40,11 @@ class ViewService {
         return stack
     }
     
-    func createListStack(textField: UITextField, titleText: String ,close: UIAction, save: UIAction) -> UIStackView {
+    func createListStack(
+        textField: UITextField, titleText: String,
+        close: UIAction, save: UIAction,
+        deleteButton: UIButton
+    ) -> UIStackView {
         let nameField = textField
         
         let subtiteLabel = AppLabel(style: .subtitle)
@@ -50,7 +54,9 @@ class ViewService {
         
         let saveButton = AppButton(style: .checkmark, action: save)
         
-        let titleStack = UIStackView(arrangedSubviews: [closeButton, subtiteLabel, saveButton])
+        let deleteButton = deleteButton
+        
+        let titleStack = UIStackView(arrangedSubviews: [closeButton, deleteButton, subtiteLabel, saveButton])
         
         let stack = verticalStack(subviews: [titleStack, nameField])
         stack.backgroundColor = .gray

@@ -15,7 +15,7 @@ protocol NetWorkAnyListProtocol: AnyObject {
     func create(element: Element) async
     func readLists() async -> [List]
     func readElements() async -> [Element]
-    func update(list: List) async
+    func update(listId: String, newList: List) async
     func update(elementId: String, element: Element) async
     func delete(listId: String) async
     func delete(elementId: String) async
@@ -118,7 +118,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     func create(list: List) async {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            try db.collection("list")
+            try db.collection(collection.users)
                 .document(uid)
                 .collection(collection.lists)
                 .document()
@@ -179,16 +179,15 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         }
     }
     
-    func update(list: List) async {
+    func update(listId: String, newList: List) async {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            let listId = list.id
             try await db.collection(collection.users)
                 .document(uid)
                 .collection(collection.lists)
                 .document(listId)
                 .updateData([
-                    "name": list.name,
+                    "name": newList.name,
                 ])
         } catch {
             print(error)

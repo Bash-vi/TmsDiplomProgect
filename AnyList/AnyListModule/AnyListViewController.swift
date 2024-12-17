@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol AnyListViewControllerDelegate: AnyObject {
+    func reloadData() async
+}
+
 protocol AnyListViewProtocol: AnyObject {
     func present(lists: [List])
     func present(user: User)
@@ -100,7 +104,7 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     
     lazy var add: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }
-        self.presenter?.openCreateListView(list: nil)
+        self.presenter?.openCreateListView(list: nil, anyListView: self)
     })
 }
 
@@ -122,17 +126,14 @@ extension AnyListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = lists[indexPath.row]
-        presenter?.openCreateListView(list: list)
+        presenter?.openCreateListView(list: list, anyListView: self)
+    }
+}
+
+extension AnyListViewController: AnyListViewControllerDelegate {
+    func reloadData() async {
+        await presenter?.refresh()
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return .init(actions: [.init(style: .destructive, title: "удалить", handler: { [weak self] _,_,_  in
-//            let elementId = self?.list[indexPath.row].id
-//            guard let elementId else { return }
-//            Task {
-//                await self?.elementService.delete(elementId: elementId)
-//                self?.loadUserData()
-//            }
-        })])
-    }
+    
 }

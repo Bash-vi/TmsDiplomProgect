@@ -11,7 +11,7 @@ protocol AnyListPresenterActionHandler: AnyObject {
     func refresh() async
     func load() async
     func signOut()
-    func openCreateListView(list: List?)
+    func openCreateListView(list: List?, anyListView: AnyListViewController)
     func openUserInfo()
 }
 
@@ -55,8 +55,8 @@ class AnyListPresenter: AnyListPresenterActionHandler, AnyListPresenterResultHan
     }
     
     //MARK: Navigation metods
-    func openCreateListView(list: List?) {
-        router.openCreateListView(list: list)
+    func openCreateListView(list: List?, anyListView: AnyListViewController) {
+        router.openCreateListView(list: list, anyListView: anyListView)
     }
     
     func openUserInfo() {

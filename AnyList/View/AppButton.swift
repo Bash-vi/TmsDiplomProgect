@@ -44,6 +44,13 @@ class AppButton: UIButton {
             heightAnchor.constraint(equalToConstant: Config.nextButtonSize).isActive = true
         case .delete:
             setImage(Icon.delete, for: .normal)
+            tintColor = .white
+            contentVerticalAlignment = .fill
+            contentHorizontalAlignment = .fill
+            layer.cornerRadius = Config.buttonSize / 2
+            widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
+            heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
+            backgroundColor = .red.withAlphaComponent(Config.alfa)
         case .add:
             setImage(Icon.add, for: .normal)
             tintColor = .systemGray5
@@ -52,7 +59,7 @@ class AppButton: UIButton {
             layer.cornerRadius = Config.buttonSize / 2
             widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
             heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
-            backgroundColor = .systemBlue.withAlphaComponent(0.3)
+            backgroundColor = .systemBlue.withAlphaComponent(Config.alfa)
         case .close:
             tintColor = .white
             setImage(Icon.close, for: .normal)
@@ -61,7 +68,7 @@ class AppButton: UIButton {
             layer.cornerRadius = Config.buttonSize / 2
             widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
             heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
-            backgroundColor = .red
+            backgroundColor = .red.withAlphaComponent(Config.alfa)
         case .checkmark:
             tintColor = .white
             setImage(Icon.checkmark, for: .normal)
