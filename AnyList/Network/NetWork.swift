@@ -15,7 +15,7 @@ protocol NetWorkAnyListProtocol: AnyObject {
     func create(element: Element) async
     func readLists() async -> [List]
     func readElements() async -> [Element]
-    func update(listId: String, list: List) async
+    func update(list: List) async
     func update(elementId: String, element: Element) async
     func delete(listId: String) async
     func delete(elementId: String) async
@@ -23,6 +23,7 @@ protocol NetWorkAnyListProtocol: AnyObject {
 }
 
 protocol NetWorkAuthProtocol: AnyObject {
+    func signOut()
     func createUser(user: User) async throws
     func sighIn(email: String?, password: String?) async throws
     func add(user: User) async
@@ -56,8 +57,6 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     
     let defaultUser: User = .init(email: nil, password: nil)
     
-    let uid = Auth.auth().currentUser?.uid
-    
     let collection = CollectionName.self
     
     func createUser(user: User) async throws {
@@ -66,28 +65,15 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         guard let password = user.password, !password.isEmpty else { throw AuthError.passwordIsEmpty }
         
         guard password.count >= minimumPasswordLength else { throw AuthError.toShortPassword }
-        
         _ = try await Auth.auth().createUser(withEmail: email, password: password)
-       
+        await add(user: user)
     }
     
     func add(user: User) async  {
-        guard let uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         let userUidData: User = .init(
-            id: uid, email: user.email, password: nil,
-            name: user.name, surename: user.surename
+            id: uid, email: user.email, password: nil,  name: user.name, surename: user.surename
         )
-        do {
-          try await db.collection("userstest").document(userUidData.id).setData([
-            "name": userUidData.name ?? "",
-            "surename": userUidData.surename ?? "",
-            "country": "USA"
-          ])
-          print("Document successfully written!")
-        } catch {
-          print("Error writing document: \(error)")
-        }
-        
         do {
             try db.collection(collection.users).document(userUidData.id).setData(from: userUidData)
         } catch {
@@ -130,9 +116,9 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     }
     
     func create(list: List) async {
-        guard let uid else { return }
         do {
-            try db.collection(collection.users)
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            try db.collection("list")
                 .document(uid)
                 .collection(collection.lists)
                 .document()
@@ -143,8 +129,8 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     }
     
     func create(element: Element) async {
-        guard let uid else { return }
         do {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
             try db.collection(collection.users)
                 .document(uid)
                 .collection("elements")
@@ -157,7 +143,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
    
     func readLists() async -> [List] {
         do {
-            guard let uid else { return [] }
+            guard let uid = Auth.auth().currentUser?.uid else { return [] }
             let snapshot = try await db.collection(collection.users)
                 .document(uid)
                 .collection(collection.lists)
@@ -176,7 +162,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
    
     func readElements() async -> [Element] {
         do {
-            guard let uid else { return [] }
+            guard let uid = Auth.auth().currentUser?.uid else { return [] }
             let snapshot = try await db.collection(collection.users)
                 .document(uid)
                 .collection("elements")
@@ -193,9 +179,10 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         }
     }
     
-    func update(listId: String, list: List) async {
+    func update(list: List) async {
         do {
-            guard let uid else { return }
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let listId = list.id
             try await db.collection(collection.users)
                 .document(uid)
                 .collection(collection.lists)
@@ -210,7 +197,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     
     func update(elementId: String, element: Element) async {
         do {
-            guard let uid else { return }
+            guard let uid = Auth.auth().currentUser?.uid else { return }
             try await db.collection("users")
                 .document(uid)
                 .collection("elements")
@@ -226,7 +213,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
    
     func delete(listId: String) async {
         do {
-            guard let uid else { return }
+            guard let uid = Auth.auth().currentUser?.uid else { return }
             try await db.collection(collection.users)
                 .document(uid)
                 .collection(collection.lists)
@@ -239,7 +226,7 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
     
     func delete(elementId: String) async {
         do {
-            guard let uid else { return }
+            guard let uid = Auth.auth().currentUser?.uid else { return }
             try await db.collection("users")
                 .document(uid)
                 .collection("elements")

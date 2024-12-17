@@ -9,7 +9,8 @@ import Foundation
 
 protocol CreateListInteractorProtocol {
     func save(list: List) async
-    func update(list: List)
+    func update(list: List) async
+    func delete(listId: String) async
 }
 
 class CreateListInteractor: CreateListInteractorProtocol {
@@ -20,7 +21,11 @@ class CreateListInteractor: CreateListInteractorProtocol {
         await netWork?.create(list: list)
     }
     
-    func update(list: List) {
-        
+    func update(list: List) async {
+        await netWork?.update(list: list)
+    }
+    
+    func delete(listId: String) async {
+        await netWork?.delete(listId: listId)
     }
 }

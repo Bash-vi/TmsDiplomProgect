@@ -27,14 +27,11 @@ class ViewService {
         return stack
     }
     
-    func createUserStack(userInfoAction: UIAction, fullName: String) -> UIStackView {
-        let fullnameLabel = AppLabel(style: .value)
-        fullnameLabel.text = fullName
-        
+    func createUserStack(userInfoAction: UIAction, fullNameLabel: UILabel) -> UIStackView {
         let welcomeLabel = AppLabel(style: .subtitle)
         welcomeLabel.text = "Добро пожаловать"
         
-        let fullNamestack = verticalStack(subviews: [welcomeLabel, fullnameLabel])
+        let fullNamestack = verticalStack(subviews: [welcomeLabel, fullNameLabel])
         
         let userInfoButton = AppButton(style: .next, action: userInfoAction)
         

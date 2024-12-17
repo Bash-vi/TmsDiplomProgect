@@ -12,12 +12,11 @@ protocol AuthViewRouter {
     func buildRegisterView() -> RegisterViewController
     func openRegisterView()
     func closeRegisterView()
-    func registerViewOpenApp()
     func authViewOpenApp()
+    func registerViewOpenAuth()
 }
 
 class AuthDefaultRouter: AuthViewRouter {
-    
     let netWork = NetWork()
     
     let anyListViewRouter: AnyListViewRouter
@@ -62,16 +61,16 @@ class AuthDefaultRouter: AuthViewRouter {
         authView?.present(registerView, animated: true)
     }
     
+    func registerViewOpenAuth() {
+        let authView = buildAuthView()
+        authView.modalPresentationStyle = .overFullScreen
+        registerView?.present(authView, animated: true)
+    }
+    
     func authViewOpenApp() {
         let anyListView = anyListViewRouter.build()
         anyListView.modalPresentationStyle = .overFullScreen
         authView?.present(anyListView, animated: true)
-    }
-    
-    func registerViewOpenApp() {
-        let anyListView = anyListViewRouter.build()
-        anyListView.modalPresentationStyle = .overFullScreen
-        registerView?.present(anyListView, animated: true)
     }
     
     func closeRegisterView() {

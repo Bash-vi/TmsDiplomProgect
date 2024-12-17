@@ -69,7 +69,6 @@ class AuthViewController: UIViewController, AuthViewProtocol {
         let email = emailField.text
         let password = passwordField.text
         Task { await self.presenter?.sighIn(email: email, password: password) }
-        presenter?.authViewOpenApp()
     })
     
     lazy var registerButtonAction: UIAction = .init(handler: { [weak self] _ in

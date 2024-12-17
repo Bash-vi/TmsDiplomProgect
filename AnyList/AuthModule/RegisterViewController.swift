@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class RegisterViewController: UIViewController, AuthViewProtocol {
 
     var presenter: AuthPresenterActionHandler?
@@ -76,6 +74,5 @@ class RegisterViewController: UIViewController, AuthViewProtocol {
         let surename = surenameField.text
         let user: User = .init(email: email, password: password, name: name, surename: surename )
         Task { await self.presenter?.register(user: user) }
-//        presenter?.registerViewOpenApp()
     })
 }

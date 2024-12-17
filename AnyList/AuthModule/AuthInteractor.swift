@@ -20,9 +20,8 @@ class AuthInteractor: AuthInteractorProtocol {
     func register(user: User) async {
         do {
             try await netWork?.createUser(user: user)
-            
-            await netWork?.add(user: user)
-            
+            presenter?.islogin(toggle: true)
+            netWork?.signOut()
         } catch {
             let authError = error as? AuthError
             guard let authError else { return }
@@ -33,6 +32,7 @@ class AuthInteractor: AuthInteractorProtocol {
     func sighIn(email: String?, password: String?) async {
         do {
             try await netWork?.sighIn(email: email, password: password)
+            presenter?.isOpenApp(toggle: true)
         } catch {
             let authError = error as? AuthError
             guard let authError else { return }

@@ -31,20 +31,24 @@ class CreateListViewController: UIViewController {
         NSLayoutConstraint.activate([
             stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: indent.left),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: indent.left),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: indent.right),
         ])
     }
     
     //MARK: Button action
     lazy var save: UIAction = .init(handler: { [weak self] _ in
-        guard let self, let name = nameField.text else { return }
+        guard let self else { return }
+        guard let name = self.nameField.text else { return }
         
-        if list != nil {
+        if list == nil {
             let newList: List = .init(name: name)
             Task { await self.presenter?.save(list: newList) }
-    } else {
-        
-    }})
+        } else {
+            guard let updatedList = self.list else { return }
+            Task { await self.presenter?.update(list: updatedList) }
+        }
+        self.presenter?.close()
+    })
     
     lazy var close: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }

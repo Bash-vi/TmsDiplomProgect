@@ -12,15 +12,16 @@ protocol AuthPresenterActionHandler: AnyObject {
     func sighIn(email: String?, password: String?) async
     func openRegisterView()
     func closeRegisterView()
-    func registerViewOpenApp()
-    func authViewOpenApp()
 }
 
 protocol AuthPresenterResultHandler: AnyObject {
     func present(errorText: String)
+    func islogin(toggle: Bool)
+    func isOpenApp(toggle: Bool)
 }
 
 class AuthPresenter: AuthPresenterActionHandler, AuthPresenterResultHandler {
+    
     let interactor: AuthInteractorProtocol
     
     weak var view: AuthViewProtocol?
@@ -56,11 +57,15 @@ class AuthPresenter: AuthPresenterActionHandler, AuthPresenterResultHandler {
         router.closeRegisterView()
     }
     
-    func registerViewOpenApp() {
-        router.registerViewOpenApp()
+    func isOpenApp(toggle: Bool) {
+        if toggle == true {
+            Task { @MainActor in router.authViewOpenApp() }
+        }
     }
     
-    func authViewOpenApp() {
-        router.authViewOpenApp()
+    func islogin(toggle: Bool) {
+        if toggle == true {
+            Task { @MainActor in router.registerViewOpenAuth() }
+        }
     }
 }

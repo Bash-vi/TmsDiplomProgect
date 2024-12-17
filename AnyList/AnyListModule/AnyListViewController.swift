@@ -30,15 +30,11 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     
     let indent = Config.Indent.self
     
-    var fullName: String {
-        guard user != nil else { return "Пожалуйста, зарегистрируйтесь"}
-        guard let user else { return "" }
-        return user.fullName
-    }
-    
     lazy var anyListLabel = AppLabel(style: .anyList)
     
-    lazy var userStack = viewService.createUserStack(userInfoAction: userInfoAction, fullName: fullName)
+    lazy var fullNameLabel = AppLabel(style: .value)
+    
+    lazy var userStack = viewService.createUserStack(userInfoAction: userInfoAction, fullNameLabel: fullNameLabel)
     
     lazy var addStack = viewService.createAddStack(add: add)
     
@@ -56,6 +52,7 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task { await presenter?.load() }
         view.backgroundColor = .gray
         view.addSubview(anyListLabel)
         view.addSubview(userStack)
@@ -81,17 +78,24 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     }
     
     func present(lists: [List]) {
-        self.lists = lists
+        Task { self.lists = lists }
     }
+    
     func present(user: User) {
         self.user = user
+        Task { @MainActor in
+            if self.user == nil {
+                fullNameLabel.text = "Пожалуйста, зарегистрируйтесь"
+            } else {
+                fullNameLabel.text = user.fullName
+            }
+        }
     }
     
     //MARK: Button action
     lazy var userInfoAction: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }
         self.presenter?.openUserInfo()
-        self.presenter?.signOut()
     })
     
     lazy var add: UIAction = .init(handler: { [weak self] _ in

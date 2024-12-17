@@ -9,7 +9,7 @@ import Foundation
 
 protocol CreateListPresenterActionHandler: AnyObject {
     func save(list: List) async
-    func update(list: List)
+    func update(list: List) async
     func close()
 }
 
@@ -31,8 +31,8 @@ class CreateListPresenter: CreateListPresenterActionHandler {
         await interactor.save(list: list)
     }
     
-    func update(list: List) {
-        
+    func update(list: List) async {
+        await interactor.update(list: list)
     }
     
     func close() {
