@@ -43,6 +43,7 @@
 		A8E474852D120074005833B2 /* CreateElementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474842D120074005833B2 /* CreateElementRouter.swift */; };
 		A8E474872D12008E005833B2 /* CreateElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474862D12008E005833B2 /* CreateElementViewController.swift */; };
 		A8E474892D124C57005833B2 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474882D124C57005833B2 /* Cell.swift */; };
+		A8E4748B2D127481005833B2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4748A2D127481005833B2 /* UserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		A8E474842D120074005833B2 /* CreateElementRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementRouter.swift; sourceTree = "<group>"; };
 		A8E474862D12008E005833B2 /* CreateElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementViewController.swift; sourceTree = "<group>"; };
 		A8E474882D124C57005833B2 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		A8E4748A2D127481005833B2 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				A8E473E32D0C8AAB005833B2 /* AnyListViewController.swift */,
+				A8E4748A2D127481005833B2 /* UserViewController.swift */,
 				A8E4745C2D10758F005833B2 /* AnyListInteractor.swift */,
 				A8E4745E2D1075EB005833B2 /* AnyListPresenter.swift */,
 				A8E474602D10760E005833B2 /* AnyListRouter.swift */,
@@ -339,6 +342,7 @@
 				A8E474682D109A4C005833B2 /* CreateListRouter.swift in Sources */,
 				A8E474032D0CBB99005833B2 /* ViewService.swift in Sources */,
 				A8E474662D109A1C005833B2 /* CreateListInteractor.swift in Sources */,
+				A8E4748B2D127481005833B2 /* UserViewController.swift in Sources */,
 				A8E474832D120034005833B2 /* CreateElementPresenter.swift in Sources */,
 				A8E474192D0CCCEE005833B2 /* RegisterViewController.swift in Sources */,
 				A8E4745D2D10758F005833B2 /* AnyListInteractor.swift in Sources */,

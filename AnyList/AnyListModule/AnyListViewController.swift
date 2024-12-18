@@ -103,7 +103,10 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     //MARK: Button action
     lazy var userInfoAction: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }
-        self.presenter?.openUserInfo()
+        guard let user = self.user else { return }
+        let userInfoView = UserViewController(user: user)
+        userInfoView.modalPresentationStyle = .overFullScreen
+        self.present(userInfoView, animated: true)
     })
     
     lazy var settingsAction: UIAction = .init(handler: { [weak self] _ in

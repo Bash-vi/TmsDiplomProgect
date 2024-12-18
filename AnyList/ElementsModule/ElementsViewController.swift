@@ -21,6 +21,8 @@ class ElementsViewController: UIViewController, ElementsViewProtocol {
     
     var listId: String?
     
+    var isSettingButtonOn = false
+    
     @MainActor
     var elements: [Element] = [] {
         didSet{
@@ -34,7 +36,7 @@ class ElementsViewController: UIViewController, ElementsViewProtocol {
     
     lazy var closeButton = AppButton(style: .close, action: close)
     
-    let settingButton = UIButton(type: .close)
+    lazy var settingButton = AppButton(style: .settings, action: settingsAction)
     
     let settingButton2 = UIButton(type: .close)
     
@@ -44,17 +46,17 @@ class ElementsViewController: UIViewController, ElementsViewProtocol {
     
     lazy var buttonStack = UIStackView(arrangedSubviews: [settingButton, settingButton2])
     
+    let reuseId = "element"
+    
     lazy var tableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.backgroundColor = .clear
         table.dataSource = self
         table.delegate = self
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        table.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
         return table
     }()
-    
-    let cellId = "element"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +97,16 @@ class ElementsViewController: UIViewController, ElementsViewProtocol {
         self.presenter?.close()
     })
     
+    lazy var settingsAction: UIAction = .init(handler: { [weak self] _ in
+        guard let self else { return }
+        isSettingButtonOn.toggle()
+        tableView.reloadData()
+        if isSettingButtonOn {
+        self.settingButton.tintColor = .yellow
+    } else {
+        self.settingButton.tintColor = .white
+    }})
+    
     lazy var add: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }
         guard let listId else { return }
@@ -109,20 +121,50 @@ extension ElementsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.reuseId) as? ElementCell
+//        guard let cell else { return UITableViewCell()}
+//        let element = elements[indexPath.row]
+//        
+//        cell.setElement(isActive: element.isActive, name: element.name, message: element.message)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId)
         guard let cell else { return UITableViewCell()}
         var config = cell.defaultContentConfiguration()
         let element = elements[indexPath.row]
         config.text = element.name
         config.secondaryText = element.message
         cell.contentConfiguration = config
+        if isSettingButtonOn {
+            cell.backgroundColor = .yellow.withAlphaComponent(Config.Cell.alfa)
+        } else {
+            cell.backgroundColor = .white
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let element = elements[indexPath.row]
         guard let listId else { return }
-        presenter?.openCreateElementView(element: element, listId: listId, elementsView: self)
+        
+        if isSettingButtonOn {
+            presenter?.openCreateElementView(element: element, listId: listId, elementsView: self)
+        } else {
+            guard var isActive = element.isActive else { return }
+            if isActive {
+                isActive.toggle()
+                let newElement = element
+                Task {
+                    await presenter?.update(listId: listId, elementId: newElement.id, element: newElement)
+                    await presenter?.refresh(listId: listId)
+                }
+            } else {
+                isActive.toggle()
+                let newElement = element
+                Task {
+                    await presenter?.update(listId: listId, elementId: newElement.id, element: newElement)
+                    await presenter?.refresh(listId: listId)
+                }
+            }
+        }
     }
 }
 

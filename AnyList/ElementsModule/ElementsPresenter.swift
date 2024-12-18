@@ -12,6 +12,7 @@ protocol ElementsPresenterActionHandler: AnyObject {
     func load(listId: String) async
     func openCreateElementView(element: Element?, listId: String, elementsView: ElementsViewController)
     func close()
+    func update(listId: String, elementId: String, element: Element) async
 }
 
 protocol ElementsPresenterResultHandler: AnyObject {
@@ -42,6 +43,10 @@ class ElementsPresenter: ElementsPresenterResultHandler, ElementsPresenterAction
     
     func present(elements: [Element]) {
         view?.present(elements: elements)
+    }
+    
+    func update(listId: String, elementId: String, element: Element) async {
+        await interactor.update(listId: listId, elementId: elementId, element: element)
     }
     
     //MARK: Navigation metods

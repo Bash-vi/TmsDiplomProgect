@@ -75,15 +75,16 @@ class CreateElementViewController: UIViewController {
         let message = self.messageField.text
         
         if element == nil {
-            let newElement: Element = .init(message: message, name: name)
+            let newElement: Element = .init(message: message, name: name, isActive: true)
             Task {
                 await self.presenter?.create(element: newElement, listId: listId )
                 await self.delegate?.reloadData(listId: listId)
             }
         } else {
-            let updatedElement: Element = .init(message: message, name: name)
+            guard let id = self.element?.id else { return }
+            let updatedElement: Element = .init(message: message, name: name, isActive: true)
             Task {
-                guard let id = self.element?.id else { return }
+                
                 await self.presenter?.update(listId: listId, elementId: id, element: updatedElement)
                 await self.delegate?.reloadData(listId: listId)
             }}

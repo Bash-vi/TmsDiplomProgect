@@ -18,7 +18,7 @@ enum Config {
     static let listIconSize: CGFloat = 180
     
     enum Cell {
-        static let indent: CGFloat = 15
+        static let indent: CGFloat = 5
         static let alfa: CGFloat = 0.2
     }
     

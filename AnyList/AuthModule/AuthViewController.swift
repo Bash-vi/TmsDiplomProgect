@@ -42,7 +42,6 @@ class AuthViewController: UIViewController, AuthViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        errorLabel.text = "что-то пошло не так"
         view.backgroundColor = .gray
         view.addSubview(anyListLabel)
         view.addSubview(stack)

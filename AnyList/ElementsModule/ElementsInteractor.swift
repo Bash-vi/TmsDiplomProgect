@@ -10,6 +10,8 @@ import Foundation
 protocol ElementsInteractorProtocol {
     func Load (listId: String) async
     func refresh(listId: String) async
+    func update(listId: String, elementId: String, element: Element) async
+    
 }
 
 class ElementsInteractor: ElementsInteractorProtocol {
@@ -28,5 +30,9 @@ class ElementsInteractor: ElementsInteractorProtocol {
         let elements = await netWork?.readElements(listId: listId)
         guard let elements else { return }
         presenter?.present(elements: elements)
+    }
+    
+    func update(listId: String, elementId: String, element: Element) async {
+        await netWork?.update(listId: listId, elementId: elementId, element: element)
     }
 }
