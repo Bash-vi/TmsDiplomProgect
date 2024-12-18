@@ -33,12 +33,14 @@ enum AuthError: Error {
     case emailIsEmpty
     case passwordIsEmpty
     case toShortPassword
+    case nameIsEmpty
     
     var errorMessege: String {
         return switch self {
         case .emailIsEmpty: "Поле почты не должна быть пустой"
         case .passwordIsEmpty: "Придумайте пароль"
         case .toShortPassword: "Короткий пароль, не меньше 8 символов"
+        case .nameIsEmpty: "Введите ваше имя"
         }
     }
 }
@@ -63,6 +65,8 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         guard let email = user.email, !email.isEmpty else { throw AuthError.emailIsEmpty }
         
         guard let password = user.password, !password.isEmpty else { throw AuthError.passwordIsEmpty }
+        
+        guard let name = user.name, !name.isEmpty else { throw AuthError.nameIsEmpty }
         
         guard password.count >= minimumPasswordLength else { throw AuthError.toShortPassword }
         _ = try await Auth.auth().createUser(withEmail: email, password: password)

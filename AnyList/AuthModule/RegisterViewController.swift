@@ -40,6 +40,7 @@ class RegisterViewController: UIViewController, AuthViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordField.isSecureTextEntry = true
         view.backgroundColor = .gray
         titleLabel.text = "Регистрация"
         view.addSubview(closeButton)

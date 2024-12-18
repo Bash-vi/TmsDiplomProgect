@@ -42,6 +42,7 @@ class AuthViewController: UIViewController, AuthViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordField.isSecureTextEntry = true
         view.backgroundColor = .gray
         view.addSubview(anyListLabel)
         view.addSubview(stack)
