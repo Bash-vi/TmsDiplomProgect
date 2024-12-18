@@ -12,13 +12,13 @@ import FirebaseFirestore
 protocol NetWorkAnyListProtocol: AnyObject {
     func signOut()
     func create(list: List) async
-    func create(element: Element) async
     func readLists() async -> [List]
-    func readElements() async -> [Element]
     func update(listId: String, newList: List) async
-    func update(elementId: String, element: Element) async
     func delete(listId: String) async
-    func delete(elementId: String) async
+    func update(listId: String, elementId: String, element: Element) async
+    func readElements(listId: String) async -> [Element]
+    func create(element: Element, listId: String) async
+    func deleteElement(listId: String, elementId: String) async
     func getUserData() async throws -> User
 }
 
@@ -128,12 +128,14 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         }
     }
     
-    func create(element: Element) async {
+    func create(element: Element, listId: String) async {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return }
             try db.collection(collection.users)
                 .document(uid)
-                .collection("elements")
+                .collection(collection.lists)
+                .document(listId)
+                .collection(collection.elemets)
                 .document()
                 .setData(from: element)
         } catch {
@@ -159,13 +161,15 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
             return []
         }
     }
-   
-    func readElements() async -> [Element] {
+    
+    func readElements(listId: String) async -> [Element] {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return [] }
             let snapshot = try await db.collection(collection.users)
                 .document(uid)
-                .collection("elements")
+                .collection(collection.lists)
+                .document(listId)
+                .collection(collection.elemets)
                 .getDocuments()
             let elements: [Element] = snapshot.documents.compactMap {
                 var element = try! $0.data(as: Element.self)
@@ -194,16 +198,22 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         }
     }
     
-    func update(elementId: String, element: Element) async {
+    func update(listId: String, elementId: String, element: Element) async {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            try await db.collection("users")
+            guard let message = element.message,
+                  let isActive = element.isActive
+            else { return }
+            try await db.collection(collection.users)
                 .document(uid)
-                .collection("elements")
+                .collection(collection.lists)
+                .document(listId)
+                .collection(collection.elemets)
                 .document(elementId)
                 .updateData([
                     "name": element.name,
-                    "price" : element.price
+                    "message" : message,
+                    "isActive" : isActive
                 ])
         } catch {
             print(error)
@@ -223,12 +233,14 @@ class NetWork: NetWorkAuthProtocol, NetWorkAnyListProtocol {
         }
     }
     
-    func delete(elementId: String) async {
+    func deleteElement(listId: String, elementId: String) async {
         do {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            try await db.collection("users")
+            try await db.collection(collection.users)
                 .document(uid)
-                .collection("elements")
+                .collection(collection.lists)
+                .document(listId)
+                .collection(collection.elemets)
                 .document(elementId)
                 .delete()
         } catch {

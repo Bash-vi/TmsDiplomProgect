@@ -19,6 +19,7 @@ enum Config {
     
     enum Cell {
         static let indent: CGFloat = 15
+        static let alfa: CGFloat = 0.2
     }
     
     enum Indent {

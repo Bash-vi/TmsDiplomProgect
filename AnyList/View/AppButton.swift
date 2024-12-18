@@ -18,6 +18,7 @@ class AppButton: UIButton {
         case loginIn
         case save
         case checkmark
+        case settings
     }
     
     enum Icon {
@@ -26,6 +27,7 @@ class AppButton: UIButton {
         static let add = UIImage(systemName: "plus.circle.fill")
         static let close = UIImage(systemName: "xmark.circle.fill")
         static let checkmark = UIImage(systemName: "checkmark.circle.fill")
+        static let settings = UIImage(systemName: "gear")
     }
     
     init(
@@ -78,6 +80,15 @@ class AppButton: UIButton {
             widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
             heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
             backgroundColor = .green
+        case .settings:
+            setImage(Icon.settings, for: .normal)
+            tintColor = .white
+            contentVerticalAlignment = .fill
+            contentHorizontalAlignment = .fill
+            layer.cornerRadius = Config.buttonSize / 2
+            widthAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
+            heightAnchor.constraint(equalToConstant: Config.buttonSize).isActive = true
+            backgroundColor = .black.withAlphaComponent(Config.alfa)
         case .register:
             setTitle("Регистрация", for: .normal)
         case .loginIn:

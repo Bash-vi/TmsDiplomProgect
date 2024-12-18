@@ -20,6 +20,8 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     
     var presenter: AnyListPresenterActionHandler?
     
+    var isSettingButtonOn = false
+    
     @MainActor
     var user: User?
     
@@ -38,9 +40,11 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
     
     lazy var fullNameLabel = AppLabel(style: .value)
     
+    lazy var settingButton = AppButton(style: .settings, action: settingsAction)
+    
     lazy var userStack = viewService.createUserStack(userInfoAction: userInfoAction, fullNameLabel: fullNameLabel)
     
-    lazy var addStack = viewService.createAddStack(add: add)
+    lazy var addStack = viewService.createAddStack(add: add, settingsButton: settingButton)
     
     lazy var tableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -102,6 +106,16 @@ class AnyListViewController: UIViewController, AnyListViewProtocol {
         self.presenter?.openUserInfo()
     })
     
+    lazy var settingsAction: UIAction = .init(handler: { [weak self] _ in
+        guard let self else { return }
+        isSettingButtonOn.toggle()
+        tableView.reloadData()
+        if isSettingButtonOn {
+        self.settingButton.tintColor = .yellow
+    } else {
+        self.settingButton.tintColor = .white
+    }})
+    
     lazy var add: UIAction = .init(handler: { [weak self] _ in
         guard let self else { return }
         self.presenter?.openCreateListView(list: nil, anyListView: self)
@@ -119,14 +133,23 @@ extension AnyListViewController: UITableViewDelegate, UITableViewDataSource {
         var config = cell.defaultContentConfiguration()
         let list = lists[indexPath.row]
         config.text = list.name
-//        config.secondaryText = element.price
         cell.contentConfiguration = config
+        if isSettingButtonOn {
+            cell.backgroundColor = .yellow.withAlphaComponent(Config.Cell.alfa)
+        } else {
+            cell.backgroundColor = .white
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = lists[indexPath.row]
-        presenter?.openCreateListView(list: list, anyListView: self)
+        
+        if isSettingButtonOn {
+            presenter?.openCreateListView(list: list, anyListView: self)
+        } else {
+            presenter?.openElementsView(listId: list.id)
+        }
     }
 }
 
@@ -134,6 +157,4 @@ extension AnyListViewController: AnyListViewControllerDelegate {
     func reloadData() async {
         await presenter?.refresh()
     }
-    
-    
 }

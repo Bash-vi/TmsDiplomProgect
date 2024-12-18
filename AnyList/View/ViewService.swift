@@ -47,7 +47,7 @@ class ViewService {
     ) -> UIStackView {
         let nameField = textField
         
-        let subtiteLabel = AppLabel(style: .subtitle)
+        let subtiteLabel = AppLabel(style: .pagetitle)
         subtiteLabel.text = titleText
         
         let closeButton = AppButton(style: .close, action: close)
@@ -63,12 +63,11 @@ class ViewService {
         return stack
     }
     
-    func createAddStack(add: UIAction) -> UIStackView {
+    func createAddStack(add: UIAction, settingsButton: UIButton) -> UIStackView {
         let titleLabel = AppLabel(style: .pagetitle)
         titleLabel.text = "Мои Списки"
-        
         let addButton = AppButton(style: .add, action: add)
-        let stack = horisontStack(subviews: [titleLabel, addButton])
+        let stack = horisontStack(subviews: [settingsButton, titleLabel, addButton])
         return stack
     }
     

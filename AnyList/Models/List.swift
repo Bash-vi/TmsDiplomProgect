@@ -9,8 +9,9 @@ import Foundation
 
 struct Element: Identifiable, Codable {
     var id: String = UUID().uuidString
-    let price: String
-    var name: String
+    var message: String?
+    let name: String
+    var isActive: Bool?
 }
 
 struct List: Identifiable, Codable {

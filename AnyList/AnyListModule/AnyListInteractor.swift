@@ -24,13 +24,13 @@ class AnyListInteractor: AnyListInteractorProtocol {
             let user = try await netWork?.getUserData()
             guard let user else { return }
             presenter?.present(user: user)
+            
+            let lists = await netWork?.readLists()
+            guard let lists else { return }
+            presenter?.present(lists: lists)
         } catch {
             print(error)
         }
-        
-        let lists = await netWork?.readLists()
-        guard let lists else { return }
-        presenter?.present(lists: lists)
     }
     
     func refresh() async {

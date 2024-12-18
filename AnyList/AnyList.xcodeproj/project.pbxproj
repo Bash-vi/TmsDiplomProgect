@@ -34,6 +34,15 @@
 		A8E474662D109A1C005833B2 /* CreateListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474652D109A1C005833B2 /* CreateListInteractor.swift */; };
 		A8E474682D109A4C005833B2 /* CreateListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474672D109A4C005833B2 /* CreateListRouter.swift */; };
 		A8E4746A2D10B12C005833B2 /* CreateListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474692D10B12C005833B2 /* CreateListPresenter.swift */; };
+		A8E474792D11F0F7005833B2 /* ElementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474782D11F0F7005833B2 /* ElementsViewController.swift */; };
+		A8E4747B2D11F966005833B2 /* ElementsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4747A2D11F966005833B2 /* ElementsPresenter.swift */; };
+		A8E4747D2D11FC85005833B2 /* ElementsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4747C2D11FC85005833B2 /* ElementsInteractor.swift */; };
+		A8E4747F2D11FCA9005833B2 /* ElementsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4747E2D11FCA9005833B2 /* ElementsRouter.swift */; };
+		A8E474812D12001A005833B2 /* CreateElementInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474802D12001A005833B2 /* CreateElementInteractor.swift */; };
+		A8E474832D120034005833B2 /* CreateElementPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474822D120034005833B2 /* CreateElementPresenter.swift */; };
+		A8E474852D120074005833B2 /* CreateElementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474842D120074005833B2 /* CreateElementRouter.swift */; };
+		A8E474872D12008E005833B2 /* CreateElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474862D12008E005833B2 /* CreateElementViewController.swift */; };
+		A8E474892D124C57005833B2 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E474882D124C57005833B2 /* Cell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +71,15 @@
 		A8E474652D109A1C005833B2 /* CreateListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListInteractor.swift; sourceTree = "<group>"; };
 		A8E474672D109A4C005833B2 /* CreateListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListRouter.swift; sourceTree = "<group>"; };
 		A8E474692D10B12C005833B2 /* CreateListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListPresenter.swift; sourceTree = "<group>"; };
+		A8E474782D11F0F7005833B2 /* ElementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsViewController.swift; sourceTree = "<group>"; };
+		A8E4747A2D11F966005833B2 /* ElementsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsPresenter.swift; sourceTree = "<group>"; };
+		A8E4747C2D11FC85005833B2 /* ElementsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsInteractor.swift; sourceTree = "<group>"; };
+		A8E4747E2D11FCA9005833B2 /* ElementsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsRouter.swift; sourceTree = "<group>"; };
+		A8E474802D12001A005833B2 /* CreateElementInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementInteractor.swift; sourceTree = "<group>"; };
+		A8E474822D120034005833B2 /* CreateElementPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementPresenter.swift; sourceTree = "<group>"; };
+		A8E474842D120074005833B2 /* CreateElementRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementRouter.swift; sourceTree = "<group>"; };
+		A8E474862D12008E005833B2 /* CreateElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateElementViewController.swift; sourceTree = "<group>"; };
+		A8E474882D124C57005833B2 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -110,6 +128,8 @@
 				A8E473E82D0C8C22005833B2 /* AuthModule */,
 				A8E473E62D0C8ACF005833B2 /* AnyListModule */,
 				A8E474642D1099AF005833B2 /* CreateListModule */,
+				A8E474772D11EF6A005833B2 /* ElementsModule */,
+				A8E474762D11EF46005833B2 /* CreateElementModule */,
 				A8E473C92D0C8A40005833B2 /* AnyList */,
 				A8E473EC2D0C9BA3005833B2 /* Frameworks */,
 				A8E473C82D0C8A40005833B2 /* Products */,
@@ -171,6 +191,7 @@
 				A8E474282D0E4AEC005833B2 /* AppIcon.swift */,
 				A8E473FE2D0CB61C005833B2 /* AppLabel.swift */,
 				A8E474002D0CB8B3005833B2 /* AppTextField.swift */,
+				A8E474882D124C57005833B2 /* Cell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -209,6 +230,28 @@
 				A8E474692D10B12C005833B2 /* CreateListPresenter.swift */,
 			);
 			path = CreateListModule;
+			sourceTree = "<group>";
+		};
+		A8E474762D11EF46005833B2 /* CreateElementModule */ = {
+			isa = PBXGroup;
+			children = (
+				A8E474802D12001A005833B2 /* CreateElementInteractor.swift */,
+				A8E474842D120074005833B2 /* CreateElementRouter.swift */,
+				A8E474822D120034005833B2 /* CreateElementPresenter.swift */,
+				A8E474862D12008E005833B2 /* CreateElementViewController.swift */,
+			);
+			path = CreateElementModule;
+			sourceTree = "<group>";
+		};
+		A8E474772D11EF6A005833B2 /* ElementsModule */ = {
+			isa = PBXGroup;
+			children = (
+				A8E474782D11F0F7005833B2 /* ElementsViewController.swift */,
+				A8E4747A2D11F966005833B2 /* ElementsPresenter.swift */,
+				A8E4747C2D11FC85005833B2 /* ElementsInteractor.swift */,
+				A8E4747E2D11FCA9005833B2 /* ElementsRouter.swift */,
+			);
+			path = ElementsModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,14 +335,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8E4743A2D0F6594005833B2 /* AuthRouter.swift in Sources */,
+				A8E4747F2D11FCA9005833B2 /* ElementsRouter.swift in Sources */,
 				A8E474682D109A4C005833B2 /* CreateListRouter.swift in Sources */,
 				A8E474032D0CBB99005833B2 /* ViewService.swift in Sources */,
 				A8E474662D109A1C005833B2 /* CreateListInteractor.swift in Sources */,
+				A8E474832D120034005833B2 /* CreateElementPresenter.swift in Sources */,
 				A8E474192D0CCCEE005833B2 /* RegisterViewController.swift in Sources */,
 				A8E4745D2D10758F005833B2 /* AnyListInteractor.swift in Sources */,
+				A8E474892D124C57005833B2 /* Cell.swift in Sources */,
 				A8E473CB2D0C8A40005833B2 /* AppDelegate.swift in Sources */,
 				A8E473FB2D0CB31F005833B2 /* Config.swift in Sources */,
 				A8E473E52D0C8AAB005833B2 /* AnyListViewController.swift in Sources */,
+				A8E474872D12008E005833B2 /* CreateElementViewController.swift in Sources */,
 				A8E474292D0E4AEC005833B2 /* AppIcon.swift in Sources */,
 				A8E474272D0E3DBF005833B2 /* List.swift in Sources */,
 				A8E473CD2D0C8A40005833B2 /* SceneDelegate.swift in Sources */,
@@ -312,9 +359,14 @@
 				A8E474612D10760E005833B2 /* AnyListRouter.swift in Sources */,
 				A8E473FD2D0CB3F7005833B2 /* AppButton.swift in Sources */,
 				A8E4746A2D10B12C005833B2 /* CreateListPresenter.swift in Sources */,
+				A8E4747B2D11F966005833B2 /* ElementsPresenter.swift in Sources */,
+				A8E474812D12001A005833B2 /* CreateElementInteractor.swift in Sources */,
+				A8E4747D2D11FC85005833B2 /* ElementsInteractor.swift in Sources */,
+				A8E474852D120074005833B2 /* CreateElementRouter.swift in Sources */,
 				A8E474252D0E22A2005833B2 /* User.swift in Sources */,
 				A8E4745F2D1075EB005833B2 /* AnyListPresenter.swift in Sources */,
 				A8E474342D0F5419005833B2 /* NetWork.swift in Sources */,
+				A8E474792D11F0F7005833B2 /* ElementsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

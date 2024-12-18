@@ -10,18 +10,22 @@ import UIKit
 protocol AnyListViewRouter {
     func build() -> AnyListViewController
     func openCreateListView(list: List?, anyListView: AnyListViewController)
+    func openElementsView(listId: String?)
 }
 
 class AnyListViewDefaultRouter: AnyListViewRouter {
     
     weak var view: UIViewController?
     
-    let CreateListViewRouter: CreateListViewRouter
+    let elementsViewRouter: ElementsViewRouter
+    let elementsRouter = ElementsViewDefaultRouter()
     
-    let CreateListRouter = CreateListViewDefaultRouter()
+    let createListViewRouter: CreateListViewRouter
+    let createListRouter = CreateListViewDefaultRouter()
     
     init() {
-        self.CreateListViewRouter = CreateListRouter
+        self.createListViewRouter = createListRouter
+        self.elementsViewRouter = elementsRouter
     }
     
     func build() -> AnyListViewController {
@@ -38,8 +42,14 @@ class AnyListViewDefaultRouter: AnyListViewRouter {
     }
     
     func openCreateListView(list: List?, anyListView: AnyListViewController) {
-        let createListView = CreateListViewRouter.build(list: list, anyListView: anyListView)
+        let createListView = createListViewRouter.build(list: list, anyListView: anyListView)
         createListView.modalPresentationStyle = .overFullScreen
         view?.present(createListView, animated: true)
+    }
+    
+    func openElementsView(listId: String?) {
+        let elementsView = elementsViewRouter.build(listId: listId)
+        elementsView.modalPresentationStyle = .overFullScreen
+        view?.present(elementsView, animated: true)
     }
 }

@@ -34,6 +34,7 @@ class CreateListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray
+        
         if list == nil {
             deleteButton.isHidden = true
         } else {
